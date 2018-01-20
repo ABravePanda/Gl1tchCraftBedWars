@@ -31,6 +31,8 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -329,11 +331,30 @@ public class GameMechanics implements Listener {
 	public void onDeath(PlayerDeathEvent e) {
 		Player p = e.getEntity();
 		e.getDrops().clear();
-		
-		if(e.getDeathMessage().equalsIgnoreCase(p.getName() + " died")) {
+		if(e.getEntity().getLastDamageCause().getCause() == null) {
 			e.setDeathMessage(p.getName() + "'s keyboard trolled him.");
+			return;
+		}
+		switch(e.getEntity().getLastDamageCause().getCause()) {
+		case FALL:
+			e.setDeathMessage("§9[DEATH] §7" + p.getName() + " went KASPLOOT!");
+			break;
+		case PROJECTILE:
+			e.setDeathMessage("§9[DEATH] §7" + p.getName() + " got sniped!");
+			break;
+		case ENTITY_ATTACK:
+			e.setDeathMessage("§9[DEATH] §7" + p.getName() + " got rekt.");
+			break;
+		case ENTITY_EXPLOSION:
+			e.setDeathMessage("§9[DEATH] §7" + p.getName() + " 'sploded");
+			break;
+		default:
+			e.setDeathMessage("§9[DEATH] §7" + p.getName() + " died");
+			break;
+			
 		}
 	}
+
 	
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent e) {
