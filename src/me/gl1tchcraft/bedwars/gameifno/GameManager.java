@@ -225,9 +225,16 @@ public class GameManager implements Listener {
 	}
 	
 	public void emeraldDrop() {
-		BossBar serverBB = plugin.getServer().createBossBar("§eYou're playing §c§lBED WARS §eon §c§lGl1tchCraft", BarColor.YELLOW, BarStyle.SOLID);
+		
+		
+		
 		BukkitScheduler scheduler = plugin.getServer().getScheduler();
 		scheduler.scheduleSyncRepeatingTask(plugin, new Runnable() {
+			
+			BossBar serverBBY = plugin.getServer().createBossBar("§eYou're playing §c§lBED WARS §eon §c§lGl1tchCraft", BarColor.YELLOW, BarStyle.SOLID);
+			BossBar serverBBR = plugin.getServer().createBossBar("§cYou're playing §e§lBED WARS §con §e§lGl1tchCraft", BarColor.RED, BarStyle.SOLID);
+			BossBar serverBBG = plugin.getServer().createBossBar("§aYou're playing §c§lBED WARS §aon §c§lGl1tchCraft", BarColor.GREEN, BarStyle.SOLID);
+			BossBar serverBBB = plugin.getServer().createBossBar("§bYou're playing §c§lBED WARS §bon §c§lGl1tchCraft", BarColor.BLUE, BarStyle.SOLID);
 			
 			@Override
 			public void run() {
@@ -235,12 +242,25 @@ public class GameManager implements Listener {
 				everyoneDead();
 
 				
+				BossBar serverBB;
+				for(Player y : GameManager.yellowTeam.getYellowPlayers()) {
+				serverBBY.addPlayer(y);
+				}
+				for(Player r : GameManager.redTeam.getRedPlayers()) {
+				serverBBR.addPlayer(r);
+				}
+				for(Player g : GameManager.greenTeam.getGreenPlayers()) {		
+				serverBBG.addPlayer(g);
+				}
+				for(Player b : GameManager.blueTeam.getBluePlayers()) {
+				serverBBB.addPlayer(b);
+				}
 				
 					if(emeraldCountdown > 0) {
 						emeraldCountdown = emeraldCountdown - 1;
 						for(Player p : Bukkit.getOnlinePlayers()) {
 						PlayerScoreboard.scoreGame(p, emeraldCountdown);
-						serverBB.addPlayer(p);
+						
 						}
 						
 					} else {

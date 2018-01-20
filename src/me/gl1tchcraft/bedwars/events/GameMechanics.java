@@ -135,7 +135,7 @@ public class GameMechanics implements Listener {
 	  @EventHandler
 	  public void onMove(PlayerMoveEvent e) {
 		  Player p = e.getPlayer();
-		  if(p.getLocation().getY() <= 85) {
+		  if(p.getLocation().getY() <= 85 && plugin.gameManager.isStarted == true) {
 			  p.setHealth(0);
 		  }
 	  }
@@ -220,7 +220,9 @@ public class GameMechanics implements Listener {
 	
 	@EventHandler
 	public void foodLevelChange(FoodLevelChangeEvent e) {
-		e.setCancelled(true);
+		if(plugin.gameManager.isStarted == false) {
+			e.setCancelled(true);
+		}
 	}
 	
 	@EventHandler
@@ -318,7 +320,7 @@ public class GameMechanics implements Listener {
 					e.setCancelled(true);
 					Location sl = e.getClickedBlock().getLocation().clone().add(0, 1, 0);
 					TNTPrimed tnt = (TNTPrimed) sl.getWorld().spawnEntity(sl, EntityType.PRIMED_TNT);
-					tnt.setYield(5f);
+					tnt.setYield(1f);
 					tnt.setFuseTicks(20);
 					p.getInventory().removeItem(new ItemStack(Material.TNT, 1));
 				}
@@ -331,8 +333,8 @@ public class GameMechanics implements Listener {
 	public void onDeath(PlayerDeathEvent e) {
 		Player p = e.getEntity();
 		e.getDrops().clear();
-		if(e.getEntity().getLastDamageCause().getCause() == null) {
-			e.setDeathMessage(p.getName() + "'s keyboard trolled him.");
+		if(e.getEntity().getLastDamageCause() == null) {
+			e.setDeathMessage("§9[DEATH] §7" + p.getName() + "'s keyboard trolled them!");
 			return;
 		}
 		switch(e.getEntity().getLastDamageCause().getCause()) {

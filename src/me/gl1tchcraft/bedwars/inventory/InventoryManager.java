@@ -2,10 +2,14 @@ package me.gl1tchcraft.bedwars.inventory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionType;
 
 import me.gl1tchcraft.bedwars.gameifno.GameManager;
 import me.gl1tchcraft.bedwars.items.ItemCreator;
@@ -186,6 +190,65 @@ public class InventoryManager {
 		
 		ItemStack tntdefuser = ItemCreator.createShopItem(Material.REDSTONE_TORCH_ON, "§9TNT Defuser", "§a2 Emeralds", 1);
 		inv.setItem(19, tntdefuser);
+		
+		ItemStack bow = ItemCreator.createShopItem(Material.BOW, "§9Bow", "§f5 Iron Ingots", 1);
+		inv.setItem(20, bow);
+		
+		ItemStack regarrows = ItemCreator.createShopItem(Material.ARROW, "§9Regular Arrow", "§e2 Gold", 8);
+		inv.setItem(21, regarrows);
+		
+		ItemStack poisarrow = ItemCreator.createShopItem(Material.TIPPED_ARROW, "§9Poison Arrow", "§e15 Gold", 8);
+		inv.setItem(22, poisarrow);
+		
+		ItemStack specarrow = ItemCreator.createShopItem(Material.SPECTRAL_ARROW, "§9Spectral Arrow", "§e25 Gold", 3);
+		inv.setItem(23, specarrow);
+
+		
+		ItemStack divider = ItemCreator.createGlassItem(Material.STAINED_GLASS_PANE, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(36, divider);
+		inv.setItem(37, divider);
+		inv.setItem(38, divider);
+		inv.setItem(39, divider);
+		inv.setItem(40, divider);
+		inv.setItem(41, divider);
+		inv.setItem(42, divider);
+		inv.setItem(43, divider);
+		inv.setItem(44, divider);
+		
+		int emeraldamount = PlayerScoreboard.getAmount(p, Material.EMERALD);
+		ItemStack emeraldamount2 = ItemCreator.createAmountItem(Material.EMERALD, ChatColor.GREEN + "" + ChatColor.BOLD + "Emeralds: " + ChatColor.YELLOW + "" + emeraldamount, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(45, emeraldamount2);
+		
+		int diamondamount = PlayerScoreboard.getAmount(p, Material.DIAMOND);
+		ItemStack diamondamount2 = ItemCreator.createAmountItem(Material.DIAMOND, ChatColor.AQUA + "" + ChatColor.BOLD + "Diamonds: " + ChatColor.YELLOW + "" + diamondamount, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(46, diamondamount2);
+		
+		int goldamount = PlayerScoreboard.getAmount(p, Material.GOLD_INGOT);
+		ItemStack goldamount2 = ItemCreator.createAmountItem(Material.GOLD_INGOT, ChatColor.GOLD + "" + ChatColor.BOLD + "Gold Ingots: " + ChatColor.YELLOW + "" + goldamount, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(47, goldamount2);
+		
+		int ironamount = PlayerScoreboard.getAmount(p, Material.IRON_INGOT);
+		ItemStack ironamount2 = ItemCreator.createAmountItem(Material.IRON_INGOT, ChatColor.WHITE + "" + ChatColor.BOLD + "Iron Ingots: " + ChatColor.YELLOW + "" + ironamount, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(48, ironamount2);
+		
+		p.openInventory(inv);
+	}
+	
+	public static void armorInventory(Player p) {
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.RED + "BedWars > " + ChatColor.DARK_RED + "ARMOR");
+		
+		ItemStack chainmail = ItemCreator.createShopItem(Material.CHAINMAIL_CHESTPLATE, "§9Full Chainmail Armor", "§b2 Diamonds", 1);
+		inv.setItem(10, chainmail);
+		
+		ItemStack ironmale = ItemCreator.createShopItem(Material.IRON_CHESTPLATE, "§9Full Iron Armor", "§b10 Diamonds", 1);
+		inv.setItem(11, ironmale);
+		
+		ItemStack diamondarmor = ItemCreator.createShopItem(Material.DIAMOND_CHESTPLATE, "§9Full Diamond Armor", "§b25 Diamonds", 1);
+		inv.setItem(12, diamondarmor);
+		
+		ItemStack diamondarmorp2 = ItemCreator.createShopItem(Material.IRON_HELMET, "§9Full Iron Armor w/Prot II", "§b35 Diamonds", 1);
+		diamondarmorp2.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+		inv.setItem(13, diamondarmorp2);
 
 		
 		ItemStack divider = ItemCreator.createGlassItem(Material.STAINED_GLASS_PANE, 1, ItemFlag.HIDE_ATTRIBUTES);
@@ -468,6 +531,115 @@ public class InventoryManager {
 					p.sendMessage("§7You purchased §cTNT Defuser §7for §a2 Emeralds§7.");
 				} else {
 					p.sendMessage("§cYou don't have enough emeralds!");
+				}
+			}
+			
+			if(m == Material.BOW) {
+				ItemStack iron = new ItemStack(Material.IRON_INGOT, 5);
+				ItemStack wood = new ItemStack(Material.BOW, 1);
+				if(p.getInventory().containsAtLeast(iron, 5)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §fBow §7for §f5 Iron Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough iron!");
+				}
+			}
+			
+			if(m == Material.ARROW) {
+				ItemStack iron = new ItemStack(Material.GOLD_INGOT, 2);
+				ItemStack wood = new ItemStack(Material.ARROW, 8);
+				if(p.getInventory().containsAtLeast(iron, 2)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §fArrows §7for §e2 Gold Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough gold!");
+				}
+			}
+			
+			if(m == Material.SPECTRAL_ARROW) {
+				ItemStack iron = new ItemStack(Material.GOLD_INGOT, 25);
+				ItemStack wood = new ItemStack(Material.SPECTRAL_ARROW, 3);
+				if(p.getInventory().containsAtLeast(iron, 25)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §eSpectral Arrows §7for §e25 Gold Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough gold!");
+				}
+			}
+			
+			if(m == Material.TIPPED_ARROW) {
+				ItemStack iron = new ItemStack(Material.GOLD_INGOT, 15);
+				ItemStack wood = new ItemStack(Material.TIPPED_ARROW, 8);
+				if(p.getInventory().containsAtLeast(iron, 15)) {
+					p.getInventory().removeItem(iron);
+				    PotionMeta meta = ((PotionMeta) wood.getItemMeta());
+				    meta.setBasePotionData(new PotionData(PotionType.POISON));
+				    wood.setItemMeta(meta);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §5Poison Arrows §7for §e15 Gold Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough gold!");
+				}
+			}
+			
+			if(m == Material.DIAMOND_CHESTPLATE) {
+				ItemStack iron = new ItemStack(Material.DIAMOND, 25);
+				ItemStack cp = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
+				ItemStack dl = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
+				if(p.getInventory().containsAtLeast(iron, 25)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().setChestplate(cp);
+					p.getInventory().setLeggings(dl);
+					p.sendMessage("§7You purchased §bDiamond Armor §7for §b25 Diamonds§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough diamonds!");
+				}
+			}
+			
+			if(m == Material.CHAINMAIL_CHESTPLATE) {
+				ItemStack iron = new ItemStack(Material.DIAMOND, 2);
+				ItemStack cp = new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1);
+				ItemStack dl = new ItemStack(Material.CHAINMAIL_LEGGINGS, 1);
+				if(p.getInventory().containsAtLeast(iron, 2)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().setChestplate(cp);
+					p.getInventory().setLeggings(dl);
+					p.sendMessage("§7You purchased §7Chainmail Armor §7for §b2 Diamonds§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough diamonds!");
+				}
+			}
+			
+			if(m == Material.IRON_CHESTPLATE) {
+				ItemStack iron = new ItemStack(Material.DIAMOND, 10);
+				ItemStack cp = new ItemStack(Material.IRON_CHESTPLATE, 1);
+				ItemStack dl = new ItemStack(Material.IRON_LEGGINGS, 1);
+				if(p.getInventory().containsAtLeast(iron, 10)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().setChestplate(cp);
+					p.getInventory().setLeggings(dl);
+					p.sendMessage("§7You purchased §fIron Armor §7for §b10 Diamonds§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough diamonds!");
+				}
+			}
+			
+			if(m == Material.IRON_HELMET) {
+				ItemStack iron = new ItemStack(Material.DIAMOND, 35);
+				ItemStack cp = new ItemStack(Material.IRON_CHESTPLATE, 1);
+				cp.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+				ItemStack dl = new ItemStack(Material.IRON_LEGGINGS, 1);
+				dl.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
+				if(p.getInventory().containsAtLeast(iron, 35)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().setChestplate(cp);
+					p.getInventory().setLeggings(dl);
+					p.sendMessage("§7You purchased §fIron Armor w/Prot II §7for §b35 Diamonds§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough diamonds!");
 				}
 			}
 			

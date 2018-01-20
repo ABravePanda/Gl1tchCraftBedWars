@@ -52,6 +52,7 @@ public class ClickEvent implements Listener {
 			}
 			if(clicked == Material.CHAINMAIL_BOOTS) {
 				p.closeInventory();
+				InventoryManager.armorInventory(p);
 			}
 		}
 		//If its BLOCKS
@@ -118,7 +119,35 @@ public class ClickEvent implements Listener {
 			if(clicked == Material.REDSTONE_TORCH_ON) {
 				InventoryManager.purchaseManager(p, clicked);
 			}
+			if(clicked == Material.BOW) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.ARROW) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.SPECTRAL_ARROW) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.TIPPED_ARROW) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
 
+		}
+		
+		if(e.getClickedInventory().getName().equalsIgnoreCase( ChatColor.RED + "BedWars > " + ChatColor.DARK_RED + "ARMOR")) {
+			e.setCancelled(true);
+			if(clicked == Material.DIAMOND_CHESTPLATE) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.CHAINMAIL_CHESTPLATE) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.IRON_CHESTPLATE) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.IRON_HELMET) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
 		}
 	}
 	
