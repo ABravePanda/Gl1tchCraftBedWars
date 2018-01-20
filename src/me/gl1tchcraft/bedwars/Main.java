@@ -37,7 +37,8 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onEnable() {
-		copy();
+		//copy();
+		
 		
 		this.getServer().getPluginManager().registerEvents(new GameMechanics(), this);
 		this.getServer().getPluginManager().registerEvents(new ClickEvent(), this);
@@ -49,7 +50,7 @@ public class Main extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		delete();
+		//delete();
 		
 	}
 	

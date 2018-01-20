@@ -48,6 +48,7 @@ public class ClickEvent implements Listener {
 			}
 			if(clicked == Material.GOLD_SWORD) {
 				p.closeInventory();
+				InventoryManager.toolsInventory(p);
 			}
 			if(clicked == Material.CHAINMAIL_BOOTS) {
 				p.closeInventory();
@@ -89,6 +90,35 @@ public class ClickEvent implements Listener {
 			if(clicked == Material.ENDER_PEARL) {
 				InventoryManager.purchaseManager(p, clicked);
 			}
+		}
+		
+		if(e.getClickedInventory().getName().equalsIgnoreCase( ChatColor.RED + "BedWars > " + ChatColor.DARK_RED + "TOOLS")) {
+			e.setCancelled(true);
+			if(clicked == Material.STONE_PICKAXE) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.IRON_PICKAXE) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.DIAMOND_PICKAXE) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.STONE_SWORD) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.IRON_SWORD) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.DIAMOND_SWORD) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.SHEARS) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.REDSTONE_TORCH_ON) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+
 		}
 	}
 	

@@ -123,11 +123,69 @@ public class InventoryManager {
 		ItemStack tnt = ItemCreator.createShopItem(Material.TNT, "§9Trinitrotoluene (TNT)", "§e15 Gold", 2);
 		inv.setItem(11, tnt);
 		
-		ItemStack egg = ItemCreator.createShopItem(Material.EGG, "§9Egg", "§f10 Iron", 2);
+		ItemStack egg = ItemCreator.createShopItem(Material.EGG, "§9Single Block Bridge Egg", "§f3 Iron", 2);
 		inv.setItem(12, egg);
 		
 		ItemStack epearl = ItemCreator.createShopItem(Material.ENDER_PEARL, "§9Ender Pearl", "§a2 Emeralds", 1);
 		inv.setItem(13, epearl);
+
+		
+		ItemStack divider = ItemCreator.createGlassItem(Material.STAINED_GLASS_PANE, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(36, divider);
+		inv.setItem(37, divider);
+		inv.setItem(38, divider);
+		inv.setItem(39, divider);
+		inv.setItem(40, divider);
+		inv.setItem(41, divider);
+		inv.setItem(42, divider);
+		inv.setItem(43, divider);
+		inv.setItem(44, divider);
+		
+		int emeraldamount = PlayerScoreboard.getAmount(p, Material.EMERALD);
+		ItemStack emeraldamount2 = ItemCreator.createAmountItem(Material.EMERALD, ChatColor.GREEN + "" + ChatColor.BOLD + "Emeralds: " + ChatColor.YELLOW + "" + emeraldamount, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(45, emeraldamount2);
+		
+		int diamondamount = PlayerScoreboard.getAmount(p, Material.DIAMOND);
+		ItemStack diamondamount2 = ItemCreator.createAmountItem(Material.DIAMOND, ChatColor.AQUA + "" + ChatColor.BOLD + "Diamonds: " + ChatColor.YELLOW + "" + diamondamount, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(46, diamondamount2);
+		
+		int goldamount = PlayerScoreboard.getAmount(p, Material.GOLD_INGOT);
+		ItemStack goldamount2 = ItemCreator.createAmountItem(Material.GOLD_INGOT, ChatColor.GOLD + "" + ChatColor.BOLD + "Gold Ingots: " + ChatColor.YELLOW + "" + goldamount, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(47, goldamount2);
+		
+		int ironamount = PlayerScoreboard.getAmount(p, Material.IRON_INGOT);
+		ItemStack ironamount2 = ItemCreator.createAmountItem(Material.IRON_INGOT, ChatColor.WHITE + "" + ChatColor.BOLD + "Iron Ingots: " + ChatColor.YELLOW + "" + ironamount, 1, ItemFlag.HIDE_ATTRIBUTES);
+		inv.setItem(48, ironamount2);
+		
+		p.openInventory(inv);
+	}
+	
+	public static void toolsInventory(Player p) {
+		Inventory inv = Bukkit.createInventory(null, 54, ChatColor.RED + "BedWars > " + ChatColor.DARK_RED + "TOOLS");
+		
+		ItemStack shears = ItemCreator.createShopItem(Material.SHEARS, "§9Shears", "§f10 Iron", 1);
+		inv.setItem(10, shears);
+		
+		ItemStack stonesword = ItemCreator.createShopItem(Material.STONE_SWORD, "§9Stone Sword", "§f15 Iron", 1);
+		inv.setItem(11, stonesword);
+		
+		ItemStack ironsword = ItemCreator.createShopItem(Material.IRON_SWORD, "§9Iron Sword", "§e7 Gold", 1);
+		inv.setItem(12, ironsword);
+		
+		ItemStack dsword = ItemCreator.createShopItem(Material.DIAMOND_SWORD, "§9Diamond Sword", "§a5 Emeralds", 1);
+		inv.setItem(13, dsword);
+		
+		ItemStack stonepick = ItemCreator.createShopItem(Material.STONE_PICKAXE, "§9Stone Pickaxe", "§f15 Iron", 1);
+		inv.setItem(14, stonepick);
+		
+		ItemStack ironpick = ItemCreator.createShopItem(Material.IRON_PICKAXE, "§9Iron Pickaxe", "§e12 Gold", 1);
+		inv.setItem(15, ironpick);
+		
+		ItemStack dpick = ItemCreator.createShopItem(Material.DIAMOND_PICKAXE, "§9Diamond Pickaxe", "§a5 Emeralds", 1);
+		inv.setItem(16, dpick);
+		
+		ItemStack tntdefuser = ItemCreator.createShopItem(Material.REDSTONE_TORCH_ON, "§9TNT Defuser", "§a2 Emeralds", 1);
+		inv.setItem(19, tntdefuser);
 
 		
 		ItemStack divider = ItemCreator.createGlassItem(Material.STAINED_GLASS_PANE, 1, ItemFlag.HIDE_ATTRIBUTES);
@@ -303,16 +361,116 @@ public class InventoryManager {
 			}
 			
 			if(m == Material.EGG) {
-				ItemStack iron = new ItemStack(Material.IRON_INGOT, 10);
+				ItemStack iron = new ItemStack(Material.IRON_INGOT, 3);
 				ItemStack wood = new ItemStack(Material.EGG, 2);
+				if(p.getInventory().containsAtLeast(iron, 3)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §eEggs §7for §f3 Iron Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough iron!");
+				}
+			}
+			
+			
+			if(m == Material.SHEARS) {
+				ItemStack iron = new ItemStack(Material.IRON_INGOT, 10);
+				ItemStack wood = new ItemStack(Material.SHEARS, 1);
 				if(p.getInventory().containsAtLeast(iron, 10)) {
 					p.getInventory().removeItem(iron);
 					p.getInventory().addItem(wood);
-					p.sendMessage("§7You purchased §eEggs §7for §f10 Iron Ingots§7.");
+					p.sendMessage("§7You purchased §fShears §7for §f10 Iron Ingots§7.");
 				} else {
-					p.sendMessage("§cYou don't have enough iorn!");
+					p.sendMessage("§cYou don't have enough iron!");
 				}
 			}
+			
+			if(m == Material.STONE_SWORD) {
+				ItemStack iron = new ItemStack(Material.IRON_INGOT, 15);
+				ItemStack wood = new ItemStack(Material.STONE_SWORD, 1);
+				if(p.getInventory().containsAtLeast(iron, 15)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §8Stone Sword §7for §f15 Iron Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough iron!");
+				}
+			}
+			
+			if(m == Material.IRON_SWORD) {
+				ItemStack iron = new ItemStack(Material.GOLD_INGOT, 7);
+				ItemStack wood = new ItemStack(Material.IRON_SWORD, 1);
+				if(p.getInventory().containsAtLeast(iron, 7)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §fIron Sword §7for §e7 Gold Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough gold!");
+				}
+			}
+			
+			if(m == Material.DIAMOND_SWORD) {
+				ItemStack iron = new ItemStack(Material.EMERALD, 5);
+				ItemStack wood = new ItemStack(Material.DIAMOND_SWORD, 1);
+				if(p.getInventory().containsAtLeast(iron, 5)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §bDiamond Sword §7for §a5 Emeralds§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough emeralds!");
+				}
+			}
+			
+			
+			//
+			if(m == Material.STONE_PICKAXE) {
+				ItemStack iron = new ItemStack(Material.IRON_INGOT, 15);
+				ItemStack wood = new ItemStack(Material.STONE_PICKAXE, 1);
+				if(p.getInventory().containsAtLeast(iron, 15)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §8Stone Pickaxe §7for §f15 Iron Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough iron!");
+				}
+			}
+			
+			if(m == Material.IRON_PICKAXE) {
+				ItemStack iron = new ItemStack(Material.GOLD_INGOT, 12);
+				ItemStack wood = new ItemStack(Material.IRON_PICKAXE, 1);
+				if(p.getInventory().containsAtLeast(iron, 12)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §fIron Pickaxe §7for §e12 Gold Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough gold!");
+				}
+			}
+			
+			if(m == Material.DIAMOND_PICKAXE) {
+				ItemStack iron = new ItemStack(Material.EMERALD, 5);
+				ItemStack wood = new ItemStack(Material.DIAMOND_PICKAXE, 1);
+				if(p.getInventory().containsAtLeast(iron, 5)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §bDiamond Pickaxe §7for §a5 Emeralds§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough emeralds!");
+				}
+			}
+			
+			if(m == Material.REDSTONE_TORCH_ON) {
+				ItemStack iron = new ItemStack(Material.EMERALD, 2);
+				ItemStack wood = new ItemStack(Material.REDSTONE_TORCH_ON, 1);
+				if(p.getInventory().containsAtLeast(iron, 2)) {
+					p.getInventory().removeItem(iron);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §cTNT Defuser §7for §a2 Emeralds§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough emeralds!");
+				}
+			}
+			
 		}
 	}
 	

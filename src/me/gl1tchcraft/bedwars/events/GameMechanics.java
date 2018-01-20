@@ -16,6 +16,7 @@ import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -27,6 +28,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -34,8 +37,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.event.player.PlayerEggThrowEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemFlag;
@@ -76,7 +82,8 @@ public class GameMechanics implements Listener {
 			p.sendMessage("DEBUG: " + GameManager.redTeam.getTeam(p));
 			
 			if(plugin.gameManager.isStarted == false) {
-				for(Entity e2 : Bukkit.getWorld("bedwars").getEntities()) {
+				
+				for(Entity e2 : Bukkit.getWorld("world").getEntities()) {
 					if(e2 instanceof Item) {
 						e2.remove();
 					}
@@ -96,16 +103,54 @@ public class GameMechanics implements Listener {
 		}
 	}
 	
+	  @EventHandler
+	    public void onCreatureSpawn(CreatureSpawnEvent event)
+	    {
+	        if (event.getSpawnReason() == SpawnReason.EGG)
+	        {
+	            event.setCancelled(true);
+	        }
+	    }
+	  
+	  @EventHandler
+	  public void onEntityInteract(PlayerInteractAtEntityEvent e) {
+		 if(e.getRightClicked() instanceof TNTPrimed) {
+			 if(e.getPlayer().getInventory().getItemInMainHand().isSimilar(new ItemStack(Material.REDSTONE_TORCH_ON))) {
+				 e.getRightClicked().remove();
+				 e.getPlayer().sendMessage("§aTNT Defused!");
+				 e.getPlayer().getInventory().remove(new ItemStack(Material.REDSTONE_TORCH_ON));
+			 }
+		 }
+	  }
+	  
+	  @EventHandler
+	  public void onThrow(PlayerEggThrowEvent e) {
+		  if(plugin.gameManager.isStarted == true) {
+			  e.getEgg().getLocation().getBlock().setType(Material.ENDER_STONE);
+		  }
+	  }
+	  
+	  @EventHandler
+	  public void onMove(PlayerMoveEvent e) {
+		  Player p = e.getPlayer();
+		  if(p.getLocation().getY() <= 85) {
+			  p.setHealth(0);
+		  }
+	  }
+	  
+	
 	public static void equipArmor(Player p, int r, int g, int b) {
 		ItemStack helmet = ItemCreator.createLeather(Material.LEATHER_HELMET, r, g, b, ItemFlag.HIDE_ATTRIBUTES);
 		ItemStack chest = ItemCreator.createLeather(Material.LEATHER_CHESTPLATE, r, g, b, ItemFlag.HIDE_ATTRIBUTES);
 		ItemStack legs = ItemCreator.createLeather(Material.LEATHER_LEGGINGS, r, g, b, ItemFlag.HIDE_ATTRIBUTES);
 		ItemStack boots = ItemCreator.createLeather(Material.LEATHER_BOOTS, r, g, b, ItemFlag.HIDE_ATTRIBUTES);
+		ItemStack sword = new ItemStack(Material.WOOD_SWORD, 1);
 		
 		p.getInventory().setHelmet(helmet);
 		p.getInventory().setChestplate(chest);
 		p.getInventory().setLeggings(legs);
 		p.getInventory().setBoots(boots);
+		p.getInventory().addItem(sword);
 	}
 	
 	@EventHandler
@@ -130,7 +175,7 @@ public class GameMechanics implements Listener {
 	
 	@EventHandler
 	public void onExplode(EntityExplodeEvent e) {
-		if(e.getEntity() instanceof TNTPrimed || e.getEntity() instanceof Fireball) {
+		if(e.getEntity() instanceof TNTPrimed) {
 			allowedBlocks.add(Material.WOOL);
 			allowedBlocks.add(Material.WOOD);
 			allowedBlocks.add(Material.ENDER_STONE);
@@ -139,11 +184,15 @@ public class GameMechanics implements Listener {
 				for(Material m : allowedBlocks) {
 					if(b.getType() == m) {
 						b.setType(Material.AIR);
+						b.getWorld().createExplosion((double) b.getX(), (double) b.getY(), (double) b.getZ(), 1f, false, false);
 					} else {
 						e.setCancelled(true);
 					}
 				}
 			}
+		}
+		if(e.getEntity() instanceof Fireball) {
+			e.setCancelled(true);
 		}
 	}
 	
@@ -248,7 +297,6 @@ public class GameMechanics implements Listener {
 				e.setCancelled(true);
 			}
 		}
-		
 	}
 	
 	@EventHandler
@@ -263,6 +311,16 @@ public class GameMechanics implements Listener {
 				fireballer.setVelocity(p.getEyeLocation().getDirection().multiply(2));
 				fireballer.setIsIncendiary(true);
 			}
+			if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+				if(e.getItem().getType() == Material.TNT) {
+					e.setCancelled(true);
+					Location sl = e.getClickedBlock().getLocation().clone().add(0, 1, 0);
+					TNTPrimed tnt = (TNTPrimed) sl.getWorld().spawnEntity(sl, EntityType.PRIMED_TNT);
+					tnt.setYield(5f);
+					tnt.setFuseTicks(20);
+					p.getInventory().removeItem(new ItemStack(Material.TNT, 1));
+				}
+			}
 
 		}
 	}
@@ -271,6 +329,10 @@ public class GameMechanics implements Listener {
 	public void onDeath(PlayerDeathEvent e) {
 		Player p = e.getEntity();
 		e.getDrops().clear();
+		
+		if(e.getDeathMessage().equalsIgnoreCase(p.getName() + " died")) {
+			e.setDeathMessage(p.getName() + "'s keyboard trolled him.");
+		}
 	}
 	
 	@EventHandler

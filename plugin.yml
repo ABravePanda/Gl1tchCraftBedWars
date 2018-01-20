@@ -11,4 +11,3 @@ commands:
         usage: /<command>
         description: Global command.
         aliases: [g]
-load: STARTUP

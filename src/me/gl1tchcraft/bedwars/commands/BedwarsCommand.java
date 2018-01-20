@@ -162,6 +162,42 @@ public class BedwarsCommand implements CommandExecutor {
             					plugin.saveConfig();
             					p.sendMessage("§bDiamond Dropper 4§7 setup.");
             				}
+               				if(args[1].equalsIgnoreCase("rediron")) {
+            					plugin.getConfig().set("RedIron.World", p.getLocation().getWorld().getName());
+            					plugin.getConfig().set("RedIron.X", p.getLocation().getX());
+            					plugin.getConfig().set("RedIron.Y", p.getLocation().getY() + 1);
+            					plugin.getConfig().set("RedIron.Z", p.getLocation().getZ());
+            					plugin.saveConfig();
+            					p.sendMessage("§cRed Iron Dropper§7 setup.");
+               				
+            				}
+               				if(args[1].equalsIgnoreCase("yellowiron")) {
+            					plugin.getConfig().set("YellowIron.World", p.getLocation().getWorld().getName());
+            					plugin.getConfig().set("YellowIron.X", p.getLocation().getX());
+            					plugin.getConfig().set("YellowIron.Y", p.getLocation().getY() + 1);
+            					plugin.getConfig().set("YellowIron.Z", p.getLocation().getZ());
+            					plugin.saveConfig();
+            					p.sendMessage("§eYellow Iron Dropper§7 setup.");
+               				
+            				}
+               				if(args[1].equalsIgnoreCase("blueiron")) {
+            					plugin.getConfig().set("BlueIron.World", p.getLocation().getWorld().getName());
+            					plugin.getConfig().set("BlueIron.X", p.getLocation().getX());
+            					plugin.getConfig().set("BlueIron.Y", p.getLocation().getY() + 1);
+            					plugin.getConfig().set("BlueIron.Z", p.getLocation().getZ());
+            					plugin.saveConfig();
+            					p.sendMessage("§bBlue Iron Dropper§7 setup.");
+               				
+            				}
+               				if(args[1].equalsIgnoreCase("greeniron")) {
+            					plugin.getConfig().set("GreenIron.World", p.getLocation().getWorld().getName());
+            					plugin.getConfig().set("GreenIron.X", p.getLocation().getX());
+            					plugin.getConfig().set("GreenIron.Y", p.getLocation().getY() + 1);
+            					plugin.getConfig().set("GreenIron.Z", p.getLocation().getZ());
+            					plugin.saveConfig();
+            					p.sendMessage("§aGreen Iron Dropper§7 setup.");
+               				
+            				}
             				if(args[1].equalsIgnoreCase("diamondtimer")) {
             					plugin.getConfig().set("DiamondTimer", Integer.parseInt(args[2]));
             					plugin.saveConfig();

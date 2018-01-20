@@ -162,22 +162,22 @@ public class GameManager implements Listener {
 		Location greenvillagerl = new Location(Bukkit.getWorld(plugin.getConfig().getString("GreenVillager.World")), plugin.getConfig().getDouble("GreenVillager.X"),
 				plugin.getConfig().getDouble("GreenVillager.Y"), plugin.getConfig().getDouble("GreenVillager.Z"));
 		
-		Entity redvillager = Bukkit.getWorld("bedwars").spawnEntity(redvillagerl, EntityType.VILLAGER);
+		Entity redvillager = Bukkit.getWorld("world").spawnEntity(redvillagerl, EntityType.VILLAGER);
 		redvillager.setCustomName(ChatColor.RED + "Item Shop");
 		redvillager.setCustomNameVisible(true);
 		this.freezeEntity(redvillager);
 		
-		Entity yellowvillager = Bukkit.getWorld("bedwars").spawnEntity(yellowvillagerl, EntityType.VILLAGER);
+		Entity yellowvillager = Bukkit.getWorld("world").spawnEntity(yellowvillagerl, EntityType.VILLAGER);
 		yellowvillager.setCustomName(ChatColor.YELLOW + "Item Shop");
 		yellowvillager.setCustomNameVisible(true);
 		this.freezeEntity(yellowvillager);
 		
-		Entity bluevillager = Bukkit.getWorld("bedwars").spawnEntity(bluevillagerl, EntityType.VILLAGER);
+		Entity bluevillager = Bukkit.getWorld("world").spawnEntity(bluevillagerl, EntityType.VILLAGER);
 		bluevillager.setCustomName(ChatColor.BLUE + "Item Shop");
 		bluevillager.setCustomNameVisible(true);
 		this.freezeEntity(bluevillager);
 		
-		Entity greenvillager = Bukkit.getWorld("bedwars").spawnEntity(greenvillagerl, EntityType.VILLAGER);
+		Entity greenvillager = Bukkit.getWorld("world").spawnEntity(greenvillagerl, EntityType.VILLAGER);
 		greenvillager.setCustomName(ChatColor.GREEN + "Item Shop");
 		greenvillager.setCustomNameVisible(true);
 		this.freezeEntity(greenvillager);
@@ -247,7 +247,7 @@ public class GameManager implements Listener {
 						emeraldCountdown = plugin.getConfig().getInt("EmeraldTimer");
 						Location emerald = new Location(Bukkit.getWorld(plugin.getConfig().getString("EmeraldDropper.World")), plugin.getConfig().getDouble("EmeraldDropper.X"),
 								plugin.getConfig().getDouble("EmeraldDropper.Y"), plugin.getConfig().getDouble("EmeraldDropper.Z"));
-						Bukkit.getWorld("bedwars").dropItem(emerald, new ItemStack(Material.EMERALD)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(emerald, new ItemStack(Material.EMERALD)).setVelocity(new Vector(0, 0, 0));
 					}
 			}
 			
@@ -274,10 +274,10 @@ public class GameManager implements Listener {
 								plugin.getConfig().getDouble("DiamondDropper3.Y"), plugin.getConfig().getDouble("DiamondDropper3.Z"));
 						Location d4 = new Location(Bukkit.getWorld(plugin.getConfig().getString("DiamondDropper4.World")), plugin.getConfig().getDouble("DiamondDropper4.X"),
 								plugin.getConfig().getDouble("DiamondDropper4.Y"), plugin.getConfig().getDouble("DiamondDropper4.Z"));
-						Bukkit.getWorld("bedwars").dropItem(d1, new ItemStack(Material.DIAMOND)).setVelocity(new Vector(0, 0, 0));
-						Bukkit.getWorld("bedwars").dropItem(d2, new ItemStack(Material.DIAMOND)).setVelocity(new Vector(0, 0, 0));
-						Bukkit.getWorld("bedwars").dropItem(d3, new ItemStack(Material.DIAMOND)).setVelocity(new Vector(0, 0, 0));
-						Bukkit.getWorld("bedwars").dropItem(d4, new ItemStack(Material.DIAMOND)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(d1, new ItemStack(Material.DIAMOND)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(d2, new ItemStack(Material.DIAMOND)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(d3, new ItemStack(Material.DIAMOND)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(d4, new ItemStack(Material.DIAMOND)).setVelocity(new Vector(0, 0, 0));
 					}
 			}
 			
@@ -298,20 +298,28 @@ public class GameManager implements Listener {
 						ironCountdown = plugin.getConfig().getInt("IronTimer");
 						
 						//Red
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 368, 122, 377), new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 368, 122, 374), new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Location ri = new Location(Bukkit.getWorld(plugin.getConfig().getString("RedIron.World")), plugin.getConfig().getDouble("RedIron.X"),
+								plugin.getConfig().getDouble("RedIron.Y"), plugin.getConfig().getDouble("RedIron.Z"));
+						Bukkit.getWorld(plugin.getConfig().getString("RedIron.World")).dropItem(ri, new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld(plugin.getConfig().getString("RedIron.World")).dropItem(ri, new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
 						
 						//Yellow
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 389, 122, 351), new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 392, 122, 351), new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Location yi = new Location(Bukkit.getWorld(plugin.getConfig().getString("YellowIron.World")), plugin.getConfig().getDouble("YellowIron.X"),
+								plugin.getConfig().getDouble("YellowIron.Y"), plugin.getConfig().getDouble("YellowIron.Z"));
+						Bukkit.getWorld(plugin.getConfig().getString("YellowIron.World")).dropItem(yi, new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld(plugin.getConfig().getString("YellowIron.World")).dropItem(yi, new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
 						
 						//Blue
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 391, 122, 410), new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 389, 122, 410), new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Location bi = new Location(Bukkit.getWorld(plugin.getConfig().getString("BlueIron.World")), plugin.getConfig().getDouble("BlueIron.X"),
+								plugin.getConfig().getDouble("BlueIron.Y"), plugin.getConfig().getDouble("BlueIron.Z"));
+						Bukkit.getWorld(plugin.getConfig().getString("BlueIron.World")).dropItem(bi, new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld(plugin.getConfig().getString("BlueIron.World")).dropItem(bi, new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
 						
 						//Green
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 419, 122, 374), new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 419, 122, 376), new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Location gi = new Location(Bukkit.getWorld(plugin.getConfig().getString("GreenIron.World")), plugin.getConfig().getDouble("GreenIron.X"),
+								plugin.getConfig().getDouble("GreenIron.Y"), plugin.getConfig().getDouble("GreenIron.Z"));
+						Bukkit.getWorld(plugin.getConfig().getString("GreenIron.World")).dropItem(gi, new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld(plugin.getConfig().getString("GreenIron.World")).dropItem(gi, new ItemStack(Material.IRON_INGOT)).setVelocity(new Vector(0, 0, 0));
 					}
 			}
 			
@@ -332,16 +340,16 @@ public class GameManager implements Listener {
 						goldCountdown = plugin.getConfig().getInt("GoldTimer");
 						
 						//Red
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 368, 122, 374), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 368, 122, 374), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
 						
 						//Yellow
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 392, 122, 351), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 392, 122, 351), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
 						
 						//Blue
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 389, 122, 410), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 389, 122, 410), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
 						
 						//Green
-						Bukkit.getWorld("bedwars").dropItem(new Location(Bukkit.getWorld("bedwars"), 419, 122, 376), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 419, 122, 376), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
 					}
 			}
 			
