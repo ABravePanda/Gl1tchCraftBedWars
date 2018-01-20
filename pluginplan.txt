@@ -1,0 +1,23 @@
+Player joins
+once 12 players game starts
+players get items
+[players play]
+after X seconds world border happens
+players die
+kicked to bungee
+
+
+
+Items:
+	Blocks:
+		- Wood
+		- Glass (TNT Proof)
+		- Wool
+		- Obby
+		- End Stone
+		- Hay
+	Explosives:
+		- TNT
+		- EGGS
+		- Snowballs
+		- Fireballs
