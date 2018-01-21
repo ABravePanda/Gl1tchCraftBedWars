@@ -45,6 +45,9 @@ public class InventoryManager {
 		inv.setItem(43, divider);
 		inv.setItem(44, divider);
 		
+		ItemStack sign = ItemCreator.createShopItem(Material.SIGN, "§9Back", "§e<---", 1);
+		inv.setItem(53, sign);
+		
 		int emeraldamount = PlayerScoreboard.getAmount(p, Material.EMERALD);
 		ItemStack emeraldamount2 = ItemCreator.createAmountItem(Material.EMERALD, ChatColor.GREEN + "" + ChatColor.BOLD + "Emeralds: " + ChatColor.YELLOW + "" + emeraldamount, 1, ItemFlag.HIDE_ATTRIBUTES);
 		inv.setItem(45, emeraldamount2);
@@ -99,6 +102,9 @@ public class InventoryManager {
 		inv.setItem(43, divider);
 		inv.setItem(44, divider);
 		
+		ItemStack sign = ItemCreator.createShopItem(Material.SIGN, "§9Back", "§e<---", 1);
+		inv.setItem(53, sign);
+		
 		int emeraldamount = PlayerScoreboard.getAmount(p, Material.EMERALD);
 		ItemStack emeraldamount2 = ItemCreator.createAmountItem(Material.EMERALD, ChatColor.GREEN + "" + ChatColor.BOLD + "Emeralds: " + ChatColor.YELLOW + "" + emeraldamount, 1, ItemFlag.HIDE_ATTRIBUTES);
 		inv.setItem(45, emeraldamount2);
@@ -145,6 +151,9 @@ public class InventoryManager {
 		inv.setItem(43, divider);
 		inv.setItem(44, divider);
 		
+		ItemStack sign = ItemCreator.createShopItem(Material.SIGN, "§9Back", "§e<---", 1);
+		inv.setItem(53, sign);
+		
 		int emeraldamount = PlayerScoreboard.getAmount(p, Material.EMERALD);
 		ItemStack emeraldamount2 = ItemCreator.createAmountItem(Material.EMERALD, ChatColor.GREEN + "" + ChatColor.BOLD + "Emeralds: " + ChatColor.YELLOW + "" + emeraldamount, 1, ItemFlag.HIDE_ATTRIBUTES);
 		inv.setItem(45, emeraldamount2);
@@ -160,6 +169,8 @@ public class InventoryManager {
 		int ironamount = PlayerScoreboard.getAmount(p, Material.IRON_INGOT);
 		ItemStack ironamount2 = ItemCreator.createAmountItem(Material.IRON_INGOT, ChatColor.WHITE + "" + ChatColor.BOLD + "Iron Ingots: " + ChatColor.YELLOW + "" + ironamount, 1, ItemFlag.HIDE_ATTRIBUTES);
 		inv.setItem(48, ironamount2);
+		
+		
 		
 		p.openInventory(inv);
 	}
@@ -202,6 +213,9 @@ public class InventoryManager {
 		
 		ItemStack specarrow = ItemCreator.createShopItem(Material.SPECTRAL_ARROW, "§9Spectral Arrow", "§e25 Gold", 3);
 		inv.setItem(23, specarrow);
+		
+		ItemStack kbs = ItemCreator.createShopItem(Material.STICK, "§Knockback Stick", "§f5 Iron", 1);
+		inv.setItem(24, kbs);
 
 		
 		ItemStack divider = ItemCreator.createGlassItem(Material.STAINED_GLASS_PANE, 1, ItemFlag.HIDE_ATTRIBUTES);
@@ -214,6 +228,9 @@ public class InventoryManager {
 		inv.setItem(42, divider);
 		inv.setItem(43, divider);
 		inv.setItem(44, divider);
+		
+		ItemStack sign = ItemCreator.createShopItem(Material.SIGN, "§9Back", "§e<---", 1);
+		inv.setItem(53, sign);
 		
 		int emeraldamount = PlayerScoreboard.getAmount(p, Material.EMERALD);
 		ItemStack emeraldamount2 = ItemCreator.createAmountItem(Material.EMERALD, ChatColor.GREEN + "" + ChatColor.BOLD + "Emeralds: " + ChatColor.YELLOW + "" + emeraldamount, 1, ItemFlag.HIDE_ATTRIBUTES);
@@ -250,6 +267,9 @@ public class InventoryManager {
 		diamondarmorp2.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2);
 		inv.setItem(13, diamondarmorp2);
 
+		
+		ItemStack sign = ItemCreator.createShopItem(Material.SIGN, "§9Back", "§e<---", 1);
+		inv.setItem(53, sign);
 		
 		ItemStack divider = ItemCreator.createGlassItem(Material.STAINED_GLASS_PANE, 1, ItemFlag.HIDE_ATTRIBUTES);
 		inv.setItem(36, divider);
@@ -430,6 +450,19 @@ public class InventoryManager {
 					p.getInventory().removeItem(iron);
 					p.getInventory().addItem(wood);
 					p.sendMessage("§7You purchased §eEggs §7for §f3 Iron Ingots§7.");
+				} else {
+					p.sendMessage("§cYou don't have enough iron!");
+				}
+			}
+			
+			if(m == Material.STICK) {
+				ItemStack iron = new ItemStack(Material.IRON_INGOT, 5);
+				ItemStack wood = new ItemStack(Material.STICK, 1);
+				if(p.getInventory().containsAtLeast(iron, 5)) {
+					p.getInventory().removeItem(iron);
+					wood.addUnsafeEnchantment(Enchantment.KNOCKBACK, 2);
+					p.getInventory().addItem(wood);
+					p.sendMessage("§7You purchased §eKnockback Stick §7for §f5 Iron Ingots§7.");
 				} else {
 					p.sendMessage("§cYou don't have enough iron!");
 				}

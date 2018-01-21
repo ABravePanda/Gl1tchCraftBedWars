@@ -54,6 +54,9 @@ public class ClickEvent implements Listener {
 				p.closeInventory();
 				InventoryManager.armorInventory(p);
 			}
+			if(clicked == Material.SIGN) {
+				InventoryManager.setupInv(ChatColor.RED + "Player Item Shop", p);
+			}
 		}
 		//If its BLOCKS
 		if(e.getClickedInventory().getName().equalsIgnoreCase( ChatColor.RED + "BedWars > " + ChatColor.DARK_RED + "BLOCKS")) {
@@ -76,6 +79,9 @@ public class ClickEvent implements Listener {
 			if(clicked == Material.HAY_BLOCK) {
 				InventoryManager.purchaseManager(p, clicked);
 			}
+			if(clicked == Material.SIGN) {
+				InventoryManager.setupInv(ChatColor.RED + "Player Item Shop", p);
+			}
 		}
 		if(e.getClickedInventory().getName().equalsIgnoreCase( ChatColor.RED + "BedWars > " + ChatColor.DARK_RED + "UTILITIES")) {
 			e.setCancelled(true);
@@ -90,6 +96,9 @@ public class ClickEvent implements Listener {
 			}
 			if(clicked == Material.ENDER_PEARL) {
 				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.SIGN) {
+				InventoryManager.setupInv(ChatColor.RED + "Player Item Shop", p);
 			}
 		}
 		
@@ -131,6 +140,12 @@ public class ClickEvent implements Listener {
 			if(clicked == Material.TIPPED_ARROW) {
 				InventoryManager.purchaseManager(p, clicked);
 			}
+			if(clicked == Material.STICK) {
+				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.SIGN) {
+				InventoryManager.setupInv(ChatColor.RED + "Player Item Shop", p);
+			}
 
 		}
 		
@@ -147,6 +162,9 @@ public class ClickEvent implements Listener {
 			}
 			if(clicked == Material.IRON_HELMET) {
 				InventoryManager.purchaseManager(p, clicked);
+			}
+			if(clicked == Material.SIGN) {
+				InventoryManager.setupInv(ChatColor.RED + "Player Item Shop", p);
 			}
 		}
 	}

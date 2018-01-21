@@ -93,11 +93,11 @@ public class GameManager implements Listener {
 	public static void assignTeam(Player p) {
 	int average = 1;
 	 
-	if (redTeam.getRedPlayers().size() < average) {
+	if (redTeam.getRedPlayers().size() < 1) {
 	redTeam.addRedPlayer(p);
-	} else if (blueTeam.getBluePlayers().size() < average) {
+	} else if (blueTeam.getBluePlayers().size() < 1) {
 	blueTeam.addBluePlayer(p);
-	} else if (greenTeam.getGreenPlayers().size() < average) {
+	} else if (greenTeam.getGreenPlayers().size() < 1) {
 	greenTeam.addGreenPlayer(p);
 	} else {
 	yellowTeam.addYellowPlayer(p);
@@ -360,16 +360,16 @@ public class GameManager implements Listener {
 						goldCountdown = plugin.getConfig().getInt("GoldTimer");
 						
 						//Red
-						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 368, 122, 374), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 1060, 129, -311), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
 						
 						//Yellow
-						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 392, 122, 351), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 1011, 129, -344), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
 						
 						//Blue
-						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 389, 122, 410), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 1044, 129, -393), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
 						
 						//Green
-						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 419, 122, 376), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
+						Bukkit.getWorld("world").dropItem(new Location(Bukkit.getWorld("world"), 1093, 129, -360), new ItemStack(Material.GOLD_INGOT)).setVelocity(new Vector(0, 0, 0));
 					}
 			}
 			

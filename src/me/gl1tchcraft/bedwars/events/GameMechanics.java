@@ -1,24 +1,21 @@
 package me.gl1tchcraft.bedwars.events;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
-import org.apache.logging.log4j.spi.ReadOnlyThreadContextMap;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Bed;
 import org.bukkit.block.Block;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Item;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.Villager;
@@ -31,8 +28,6 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -54,7 +49,6 @@ import me.gl1tchcraft.bedwars.gameifno.GameManager;
 import me.gl1tchcraft.bedwars.items.ItemCreator;
 import me.gl1tchcraft.bedwars.playerinfo.PlayerManager;
 import me.gl1tchcraft.bedwars.playerinfo.PlayerScoreboard;
-import me.gl1tchcraft.bedwars.teaminfo.TeamManager;
 import net.md_5.bungee.api.ChatColor;
 
 public class GameMechanics implements Listener {
@@ -62,6 +56,7 @@ public class GameMechanics implements Listener {
 	private Main plugin = Main.getPlugin(Main.class);
 	private ArrayList<Material> blocks = new ArrayList<Material>();
 	private ArrayList<Material> allowedBlocks = new ArrayList<Material>();
+	private HashMap<Player, ItemStack[]> armor = new HashMap<Player, ItemStack[]>();
 	
 	private int taggersSelected;
 	
@@ -115,6 +110,11 @@ public class GameMechanics implements Listener {
 	    }
 	  
 	  @EventHandler
+	  public void onFood(FoodLevelChangeEvent e) {
+		  e.setCancelled(true);
+	  }
+	  
+	  @EventHandler
 	  public void onEntityInteract(PlayerInteractAtEntityEvent e) {
 		 if(e.getRightClicked() instanceof TNTPrimed) {
 			 if(e.getPlayer().getInventory().getItemInMainHand().isSimilar(new ItemStack(Material.REDSTONE_TORCH_ON))) {
@@ -127,8 +127,10 @@ public class GameMechanics implements Listener {
 	  
 	  @EventHandler
 	  public void onThrow(PlayerEggThrowEvent e) {
+		  LivingEntity p = e.getPlayer();
 		  if(plugin.gameManager.isStarted == true) {
-			  e.getEgg().getLocation().getBlock().setType(Material.ENDER_STONE);
+		//	  p.getLineOfSight(Material.ENDER_STONE, 5);
+			 // e.getEgg().getLocation().getBlock().setType(Material.ENDER_STONE);
 		  }
 	  }
 	  
@@ -232,6 +234,7 @@ public class GameMechanics implements Listener {
 			blocks.add(Material.WOOL);
 			blocks.add(Material.ENDER_STONE);
 			blocks.add(Material.STAINED_GLASS);
+			blocks.add(Material.WOOD);
 			
 			if(!blocks.contains(e.getBlock().getType())) {
 			e.setCancelled(true);
@@ -248,6 +251,7 @@ public class GameMechanics implements Listener {
 		blocks.add(Material.WOOL);
 		blocks.add(Material.ENDER_STONE);
 		blocks.add(Material.STAINED_GLASS);
+		blocks.add(Material.WOOD);
 		
 		
 		if(!blocks.contains(e.getBlock().getType())) {
@@ -332,6 +336,8 @@ public class GameMechanics implements Listener {
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e) {
 		Player p = e.getEntity();
+		ItemStack[] parmor = p.getInventory().getArmorContents();
+		armor.put(p, parmor);
 		e.getDrops().clear();
 		if(e.getEntity().getLastDamageCause() == null) {
 			e.setDeathMessage("§9[DEATH] §7" + p.getName() + "'s keyboard trolled them!");
@@ -379,6 +385,8 @@ public class GameMechanics implements Listener {
 				} else {
 					e.setRespawnLocation(GameManager.greenSpawn);
 					GameMechanics.equipArmor(p, 0, 255, 0);
+					p.getInventory().setArmorContents(armor.get(p));
+					armor.remove(p);
 				}
 			}
 			if(GameManager.redTeam.getRedPlayers().contains(p)) {
@@ -397,6 +405,8 @@ public class GameMechanics implements Listener {
 				} else {
 					e.setRespawnLocation(GameManager.redSpawn);
 					GameMechanics.equipArmor(p, 255, 0, 0);
+					p.getInventory().setArmorContents(armor.get(p));
+					armor.remove(p);
 				}
 			}
 			if(GameManager.blueTeam.getBluePlayers().contains(p)) {
@@ -415,6 +425,8 @@ public class GameMechanics implements Listener {
 				} else {
 					e.setRespawnLocation(GameManager.blueSpawn);
 					GameMechanics.equipArmor(p, 0, 0, 255);
+					p.getInventory().setArmorContents(armor.get(p));
+					armor.remove(p);
 				}
 			}
 			if(GameManager.yellowTeam.getYellowPlayers().contains(p)) {
@@ -433,6 +445,8 @@ public class GameMechanics implements Listener {
 				} else {
 					e.setRespawnLocation(GameManager.yellowSpawn);
 					GameMechanics.equipArmor(p, 255, 250, 0);
+					p.getInventory().setArmorContents(armor.get(p));
+					armor.remove(p);
 				}
 			}
 		}
